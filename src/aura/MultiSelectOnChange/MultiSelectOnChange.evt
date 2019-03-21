@@ -1,0 +1,7 @@
+<aura:event type="COMPONENT" description="MultiSelectOnChange">
+
+    <aura:attribute name="name" type="String" description="" />
+    <aura:attribute name="selectedValues" type="Object[]" description="" />
+    <aura:attribute name="isAllSelected" type="Boolean" description="" />
+
+</aura:event>

@@ -1,0 +1,189 @@
+.THIS .disabled{
+    background-color: rgb(236, 235, 234);
+    border-color: #a8b7c7;
+}
+
+.THIS .all-item-separator{
+    border:0.5px solid #cdcdcd;
+    height:1px;
+    width: 100%;
+}
+
+.THIS .custom-icon {
+    right: 0px !important;
+}
+
+.THIS .slds-lookup__search-input slds-input inputSize input uiInput uiInputText uiInput--default uiInput--input{
+    height: 45px;
+}
+
+.THIS .showSelectedButton{
+    height: inherit;
+    width: 110px;
+    border: solid 1px #0070d2;
+    color: black;
+    background: #ffffff;
+}
+
+/*add one style for several classes*/
+.THIS .showSelectedButton-pressed, .THIS .showSelectedButton-pressed:hover, .THIS .showSelectedButton-pressed:focus{
+    height: inherit;
+    background: #0070d2;
+    color: white;
+    border: none;
+}
+
+/*prevents from text-decorations*/
+.THIS .uiMenuList--default .uiMenuItem>a:hover{
+    text-decoration: none;
+    border-radius: 8px;
+    background-color: #f1f1f1;
+}
+
+.THIS .uiMenuList--default .uiMenuItem>a:focus{
+    text-decoration: none;
+    border-radius: 8px;
+    background-color: #f1f1f1;
+}
+
+/*standart slyle for select option*/
+.THIS .slds-dropdown__item>a {
+    padding: .5rem .75rem;
+    padding-top: 0.5rem;
+    padding-right: 0.75rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.75rem;
+}
+
+/* represents dotted frame for checkboks*/
+.THIS .dropdown-check-container{
+    width: 19px;
+    height: 19px;
+    border: 1px dashed #d2d2d2;
+}
+
+.THIS .slds-dropdown__item.slds-is-selected .slds-icon_selected{
+    margin-top: 0px;
+}
+
+.THIS .item-set-fixed-width{
+    width: 220px;
+}
+
+.THIS.slds-grid slds-grid--align-spread slds-grid--vertical-align-center{
+    z-index: 90;
+}
+
+.THIS.filters-dropdown-menu{
+    z-index: 90;
+}
+
+.THIS.filters-dropdown-menu-over-all{
+    z-index: 7000;
+}
+
+/*Override overflow from scroll to visible, to add scrollbars to picklist */
+.THIS .scrollable {
+    width: 15rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 260px;
+}
+
+/*Set height of dropdown*/
+.THIS .custom-dropdown {
+    overflow-y: auto;
+    max-height: 260px;
+    display: block;
+}
+
+.THIS .inp-button{
+    margin-top: -10px;
+}
+
+.THIS .inp-field {
+    height: inherit;
+    min-height: 32px;
+    padding-left: 9px;
+}
+.THIS .inp-field-parent-container {
+    height: 32px;
+    position: absolute;
+    top: -35px;
+    width: 100%;
+    display: flex;
+}
+
+.THIS .slds-combobox__form-element {
+    height: inherit;
+}
+
+.THIS .filters-dropdown-menu .slds-dropdown__item {
+    line-height: 2 !important;
+    border-top: 1px solid rgb(244, 244, 244)
+}
+
+.THIS .slds-dropdown__item {
+    line-height: 1.6 !important;
+    border-top: 1px solid rgb(244, 244, 244)
+}
+
+.THIS .filters-dropdown-menu .slds-dropdown__item a > span {
+    padding: .5rem .75rem;
+}
+
+.THIS .filters-dropdown-menu .slds-dropdown__item.slds-is-selected a {
+    color: #1c82fc;
+}
+
+.THIS .dropdown-items-menu{
+    margin-top: -1px;
+}
+
+.THIS .filters-dropdown-menu .slds-dropdown__item.slds-is-selected svg {
+    fill: #1c82fc;
+}
+
+.THIS .filters-dropdown-menu .menu-items-divider {
+    padding: 0;
+    margin: 0 0 0 .75rem;
+}
+
+.THIS .filters-dropdown-menu .menu-items-divider:last-child {
+    display: none;
+}
+
+.THIS .filters-dropdown-menu .menu-items-divider a {
+    display: none;
+}
+
+.THIS .label-text{
+    padding-bottom: 2px;
+    color: #666464;
+    font-weight: 500;
+}
+
+.THIS .actionMenuItem_invisible{
+    display: none;
+}
+
+.THIS .dropdown-menu-list{
+    margin-top: 2px;
+    padding: 0;
+}
+
+.THIS   .uiMenuList--default.uiMenuList {
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
+    border: 1px solid rgb(221, 219, 218);
+    border-radius: .25rem;
+    border-left: 0px;
+}
+/**Dropdown controls**/
+.THIS .dropdown-menu-list-open {
+    display: block;
+}
+
+.THIS .dropdown-menu-list-close {
+    display: none;
+}

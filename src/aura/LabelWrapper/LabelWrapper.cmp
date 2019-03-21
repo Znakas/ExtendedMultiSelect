@@ -1,0 +1,55 @@
+<aura:component description="Tricky label wrapper, can be used as usual component for labels, or to maintain custom component for picklist">
+    <!--public params-->
+    <aura:attribute name="label"
+                    type="String"
+                    default=""
+                    access="public"
+                    description="Option label param"
+    />
+    <aura:attribute name="value"
+                    type="String"
+                    default=""
+                    access="public"
+                    description="Option value param"
+    />
+    <aura:attribute name="params" 
+                    type="Object"
+                    default="[]"
+                    access="public"
+                    description="Different object params. "
+    />
+
+    <aura:attribute name="isUsingCustomLabelsAsOption"
+                    type="Boolean"
+                    default="false"
+                    description="If true, gets values from custom labels"
+    />
+    <aura:attribute name="selectOption"
+                    type="Aura.ComponentDefRef[]"
+                    description="Custom component`s param. Is used to keep custom component for Select Option"
+    />
+
+    <!--handlers-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <!--BODY-->
+    <p class="label-wrapper slds-truncate" title="{! v.label}">
+
+        <aura:if isTrue="{! v.selectOption.length == 0}">
+            {!v.label}
+        </aura:if>
+
+        <!--CUSTOM-->
+        <aura:if isTrue="{! v.selectOption.length > 0}">
+            <!--for standart labels(Loading, NotFound)-->
+            <aura:if isTrue="{! !v.params}">
+                {!v.label}
+            </aura:if>
+            <!--for custom select items-->
+            <aura:if isTrue="{! v.params}">
+                {! v.selectOption}
+            </aura:if>
+        </aura:if>
+    </p>
+
+</aura:component>

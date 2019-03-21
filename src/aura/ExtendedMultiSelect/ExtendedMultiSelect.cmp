@@ -1,0 +1,299 @@
+<aura:component access="public" controller="ExtendedMultiSelectController" implements="flexipage:availableForAllPageTypes" >
+
+    <!--public attributes-->
+    <aura:attribute name="name"
+                    type="String"
+                    access="public"
+                    description="Unique name identifier for picklist. Passed back with MultiSelectOnChange event."
+    />
+    <aura:attribute name="options"
+                    type="SelectItem[]"
+                    access="public"
+                    description="List of input options for picklist."
+    />
+    <aura:attribute name="tempList"
+                    type="String[]"
+                    access="public"
+                    description="Temporary list for picklist."
+    />
+    <aura:attribute name="isDisabled"
+                    type="Boolean"
+                    default="false"
+                    access="public"
+                    description="Disables picklist, if true."
+    />
+    <aura:attribute name="isInputEnabled"
+                    type="Boolean"
+                    default="false"
+                    access="public"
+                    description="If true, enables input field for search. It`s using for search in select Options."
+    />
+    <aura:attribute name="isAllEnabled"
+                    type="Boolean"
+                    default="false"
+                    access="public"
+                    description="If true, enables 'All Selected' button.
+                    On click, it makes all items selected, and vise versa. Client Search only."
+    />
+    <aura:attribute name="isLazyLoadingEnabled"
+                    type="Boolean"
+                    default="false"
+                    access="public"
+                    description="If true, enables Lazy Loading on scroll and provides serch on server side,
+                    which must be predefined in handlerClass property. Server search only."
+    />
+    <aura:attribute name="delay"
+                    type="Integer"
+                    default="200"
+                    access="public"
+                    description="Duration of delay while typing text in search input."
+    />
+    <aura:attribute name="chunkSize"
+                    type="Integer"
+                    default="10"
+                    access="public"
+                    description="Size of items, which will be returned while scrolling. Only for server search."
+    />
+    <aura:attribute name="isShowSelectedEnabled"
+                    type="Boolean"
+                    access="public"
+                    default="false"
+                    description="If true, showSelected Button is enabled.
+                    This button is used to show only selected Items. Server search only."
+    />
+    <aura:attribute name="handlerClass"
+                    type="String"
+                    access="public"
+                    description="Handler class, contains class name for Server Search.
+                     While use server search, is Required. Server search only."
+    />
+    <aura:attribute name="isUsingCustomLabelsAsOption"
+                    type="Boolean"
+                    default="false"
+                    access="public"
+                    description="If true, fetch values for selected options from Custom Labels.
+                    Options must be like '$Label.namespace.labelName'"
+    />
+    <aura:attribute name="outputComponent"
+                    type="Aura.ComponentDefRef[]"
+                    access="public"
+                    description="Property contains custom Select Item Component, predefined by user.
+                    Specify params property in SelectItem , to use this component"
+    />
+    <!--TEXT LABELS, they can be overridden-->
+    <aura:attribute name="selectedLabel"
+                    type="String"
+                    access="public"
+                    default="Selected"
+                    description="Label for showSelected Button. Used for server search."
+    />
+    <aura:attribute name="allLabel"
+                    type="String"
+                    access="public"
+                    default="All"
+                    description="Label for All button. Used for client search."
+    />
+    <aura:attribute name="initialPlaceholderLabel"
+                    type="String"
+                    access="public"
+                    default="Select an option..."
+    />
+    <aura:attribute name="optionsSelectedLabel"
+                    type="String"
+                    access="public"
+                    default="Options Selected"
+    />
+    <aura:attribute name="inputPlaceholderLabel"
+                    type="String"
+                    access="public"
+                    default="Input text..."
+    />
+    <aura:attribute name="loadingLabel"
+                    type="String"
+                    access="public"
+                    default="Loading..."
+    />
+    <aura:attribute name="noRecordsFoundLabel"
+                    type="String"
+                    access="public"
+                    default="No records found"
+    />
+    <aura:attribute name="picklistlabel"
+                    type="String"
+                    access="public"
+                    description="Label over picklist"
+    />
+    <!--private attributes-->
+    <aura:attribute name="inputValue"
+                    type="String"
+                    access="private"
+                    default=""
+                    description="Value in input field, using for search in list."
+    />
+    <aura:attribute name="timer"
+                    type="Integer"
+                    access="private"
+                    description="It sets duration while user is typing"
+    />
+    <aura:attribute name="isShowSelectedPressed"
+                    type="Boolean"
+                    access="private"
+                    default="false"
+                    description="Determines, if ShowSelected button is pressed, or not. Only for server search."
+    />
+    <aura:attribute name="privateOptions"
+                    type="SelectItem[]"
+                    access="private"
+                    description="private version of 'options' attribute."
+    />
+    <aura:attribute name="selectedOptions"
+                    type="SelectItem[]"
+                    access="private"
+                    description="List of selected options"
+    />
+    <aura:attribute name="maintainSelectedOptions"
+                    type="SelectItem[]"
+                    access="private"
+                    description="backupList of selected options"
+    />
+    <aura:attribute name="inputIcon"
+                    type="String"
+                    access="private"
+                    default="search"
+                    description="Icon value. Can contain: search, spinner, clear"
+    />
+    <aura:attribute name="offsetRecordsNum"
+                    type="Integer"
+                    default="0"
+                    access="private"
+                    description="Maintains offset value, used for correct lazy loading."
+    />
+    <aura:attribute name="placeholderValue"
+                    type="String"
+                    access="private"
+                    default="Select an option..."
+                    description="Maintains placeholder value - number of selected items, or labels value"
+    />
+
+    <!--handlers-->
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:handler name="change" value="{!v.options}" action="{!c.onchange}" />
+    <!--methods-->
+    <aura:method name="getSelectedOptions" description="Method to return selected values" />
+
+    <!--custom register events -->
+    <aura:registerEvent name="selectOptionChanged" type="c:MultiSelectOnChange"/>
+
+    <!--BODY-->
+    <span class="label-text">
+        <aura:if isTrue="{!v.picklistlabel}">
+            {!v.picklistlabel}
+        </aura:if>
+    </span>
+
+    <ui:menu class="filters-dropdown-menu slds-dropdown_left slds-dropdown_small" aura:id="www">
+
+        <ui:menuTriggerLink aura:id="menuTriggerLink" label="" class="slds-show slds-truncate" disabled="{!v.isDisabled}" >
+            <div aura:id="main-div"  class="{!'slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click' + if(v.isDisabled, ' disabled', '') }" >
+                <button class="{!'slds-button slds-button--neutral slds-picklist__label'+ if(v.isDisabled, ' disabled', '') }" aria-haspopup="true" >
+                    <span class="slds-truncate">
+
+                        <c:LabelWrapper aura:id="selected_label" label="{! v.placeholderValue }"/>
+
+                        <aura:if isTrue="{! !v.isDisabled }">
+                            <lightning:icon iconName="utility:down" size="small" class="slds-icon custom-icon" />
+                        </aura:if>
+
+                    </span>
+                </button>
+            </div>
+        </ui:menuTriggerLink>
+
+        <!--Drop down-->
+        <ui:menuList class="dropdown-menu-list slds-slds-dropdown_left slds-dropdown_small"
+                     menuSelect="{!c.menuFocusChange}"
+                     menuCollapse="{!c.onMenuCollapse}"
+                     menuExpand="{!c.onMenuExpand}"
+                     aura:id="menuList">
+            <!--Input field-->
+            <aura:if isTrue="{! v.isInputEnabled}" >
+                <div class="inp-field-parent-container">
+
+                    <div aura:id="inputField" class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"  style="width: 100%; " onkeydown="{!c.onKeyDown}">
+                        <ui:inputText keyup="{!c.onInputChange}"
+                                      updateOn="keyUp"
+                                      focus="{!c.onInputFocus}"
+                                      class="inp-field slds-lookup__search-input slds-p-right_x-large"
+                                      value="{!v.inputValue}"
+                                      placeholder="{! v.inputPlaceholderLabel}" />
+
+                        <button class="inp-button slds-input__icon slds-input__icon_right slds-button slds-button_icon" onclick="{! c.onInputIconClick}" style="height: 20px;width: 20px;">
+                            <lightning:icon iconName="{! 'utility:' + v.inputIcon}" size="x-small" alternativeText="icon" />
+                        </button>
+                    </div>
+
+                    <aura:if isTrue="{! and(v.isLazyLoadingEnabled, v.isShowSelectedEnabled) }" >
+                        <button class="showSelectedButton slds-button"
+                                aura:id='showSelectedButton'
+                                onclick="{! c.onButtonShowSelectedClick}"
+                                name="showSelected">
+                            {! v.selectedLabel}
+                        </button>
+                    </aura:if>
+
+                </div>
+            </aura:if>
+
+            <!--Items list-->
+            <div class="custom-dropdown"
+                 aura:id="scrollableRecordsArea"
+                 onscroll="{!c.onScroll}"
+                 onmousewheel="{!c.onMouseWeel}"
+                 onkeydown="{!c.onKeyDown}"
+                 tabindex="2">
+                <aura:iteration items="{!v.privateOptions}" var="item" indexVar="index" aura:id="iteration">
+                    <ui:actionMenuItem aura:id="menuItem"
+                                       class="{!'slds-truncate slds-dropdown__item ' + if(item.selected,'slds-is-selected','') }"
+                                       label="{!item.label}"
+                                       hideMenuAfterSelected="false"
+                                       click="{!c.onSelectItemClick}">
+
+                        <span class="slds-truncate" data-index="{!index}">
+                            <span class="slds-grid slds-grid--align-spread slds-grid--vertical-align-center" title="{!item.label}" >
+
+                                <span class="slds-col slds-truncate slds-p-right--small" title="{!item.label}" >
+                                    <span class="item-set-fixed-width">
+                                        <span class="slds-truncate" title="{!item.label}">
+
+                                            <c:LabelWrapper selectOption="{! v.outputComponent}"
+                                                               label="{!item.label}"
+                                                               value="{!item.value}"
+                                                               params="{!item.params}"
+                                                               aura:id="wrapper"
+                                                               isUsingCustomLabelsAsOption="{!v.isUsingCustomLabelsAsOption}"
+                                            />
+                                        </span>
+                                    </span>
+                                </span>
+
+                                <aura:if isTrue="{!item.value != null}">
+                                    <span class="dropdown-check-container">
+                                        <lightning:icon alternativeText="Fold State"
+                                                        class="slds-icon slds-icon_selected slds-icon_x-small slds-icon-text-default slds-m-right_x-small slds-icon-text-light"
+                                                        iconName="utility:check"
+                                                        size="x-small"
+                                        />
+                                    </span>
+                                </aura:if>
+
+                            </span>
+                        </span>
+                    </ui:actionMenuItem>
+                    <aura:if isTrue="{!item.isAll}">
+                        <div class="all-item-separator" />
+                    </aura:if>
+                </aura:iteration>
+            </div>
+        </ui:menuList>
+    </ui:menu>
+</aura:component>
