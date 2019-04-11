@@ -6,11 +6,11 @@
  */
 public with sharing class ExtendedMultiSelectHandler implements ExtendedMultiSelectHandlerInterface {
     /**
-     * @description method for server search, returns list of data, filtered to contitions
+     * @description method for server search, returns list of data, filtered through conditions
      * @param word search word, which is used to specify search filter
      * @param listOffset specifies the starting row offset into the result, returned by search
      * @param listLimit specifies the maximum number of records to return
-     * @return list of data, filtered to contitions
+     * @return list of data, filtered through conditions
      */
     public static List<SelectItem> searchRecord(String word, Integer listOffset, Integer listLimit) {
 
