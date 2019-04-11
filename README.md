@@ -1,19 +1,19 @@
 ### Main config attributes:
 
 #### isDisabled
-Determine, enable or disable component. If disabled = true, we even cannot expand it:
+Determine, enable or disable component. If disabled = true, we even cannot expand it.
  
 #### isInputEnabled
 If true, enables input, which provides search in list of select options using JS(client search) or apex (server search)
 
 #### isAllEnabled
-If true, enables additional  ‘All’ option. It can select/or deselect all available items. Only for JS(Client search)
-To make this work, isLazyLoadingEnabled param should be false
+If true, enables additional  ‘All’ option. It can select/or deselect all available items. Only for **JS**(Client search)
+To make this work, isLazyLoadingEnabled param must be **false**
 
 #### isLazyLoadingEnabled
-If true, enables lazy loading through items in dropdown on mousescroll or wheel, and server search, using apex. 
+If true, enables lazy loading through items in dropdown **onmousescroll** or **onmousewheel**, and server search, using apex. 
 To start using server search, you should define handlerClass param. 
-It should contain name of apex class, which provides server search logic and implement MultiselectHandlerInterface
+Handler param is **mandatory**. It provides server search logic and implement MultiselectHandlerInterface
 Example of class to be set as handler param.
 
     /**
@@ -64,13 +64,13 @@ Example of class to be set as handler param.
     }
 
 #### isShowSelectedEnabled
-If true, shows ‘Selected’ button on input. 
+If true, shows ‘Selected’ button on input. Works only for **server search**
 On click, it shows only selected items
 
 #### isUsingCustomLabelsAsOption
 This option will be useful, if you want to set an array of custom labels as options. If true, all values will be fetched from custom labels. 
-Use it only for JS(client search), for server search define logic in controller.
-Labels must be in format /$Label.namespace.labelName/
+Use this param only for JS(client search), for server search define logic in controller.
+Labels must be in format '$Label.namespace.labelName'
 
 #### outputComponent
 This attribute allows you to use your own custom components to replace standard menu items.
