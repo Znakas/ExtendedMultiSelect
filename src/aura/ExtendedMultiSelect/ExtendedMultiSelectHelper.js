@@ -45,7 +45,7 @@
 
         var action = component.get("c.searchRecord");
         action.setParams({
-            'word' : searchParams
+            'searchParams' : searchParams
         });
 
         // Add callback behavior for when response is received
