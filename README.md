@@ -27,3 +27,8 @@ Attribute name	isAllEnabled	isLazyLoadingEnabled	isShowSelectedEnabled	isInputEn
 2	isLazyLoadingEnabled	not required	required true	not required	not required
 3	isShowSelectedEnabled	not required	required true	required true	not required
 4	isInputEnabled	not required	not required	not required
+
+| First Header  | Second Header |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |
