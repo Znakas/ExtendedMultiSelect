@@ -32,7 +32,9 @@ Labels must be in format /$Label.namespace.labelName/
 This attribute allows you to use your own custom components to replace standard menu items.
 To make this work, your options must contain ‘params’ populated.
 
+
 Attribute dependency:
+
 |   | Attribute name        | isAllEnabled  | isLazyLoadingEnabled | isShowSelectedEnabled | isInputEnabled |
 |---|-----------------------|---------------|----------------------|-----------------------|----------------|
 | 1 | isAllEnabled          | required true | required false       | not required          | not required   |
