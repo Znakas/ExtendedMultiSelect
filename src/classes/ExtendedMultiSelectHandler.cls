@@ -12,7 +12,7 @@ public with sharing class ExtendedMultiSelectHandler implements ExtendedMultiSel
      * @param listLimit specifies the maximum number of records to return
      * @return list of data, filtered through conditions
      */
-    public static List<SelectItem> searchRecord(String word, Integer listOffset, Integer listLimit) {
+    public List<SelectItem> searchRecord(String word, Integer listOffset, Integer listLimit) {
 
         List<SelectItem> options = new List<SelectItem>();
 
