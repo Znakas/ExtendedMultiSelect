@@ -30,7 +30,7 @@ Example of class to be set as handler param.
          * @param listLimit specifies the maximum number of records to return
          * @return list of data, filtered to contitions
          */
-        public static List<SelectItem> searchRecord(String word, Integer listOffset, Integer listLimit) {
+        public List<SelectItem> searchRecord(String word, Integer listOffset, Integer listLimit) {
     
             List<SelectItem> options = new List<SelectItem>();
     
